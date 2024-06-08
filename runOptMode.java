@@ -39,7 +39,7 @@ public class drive extends LinearOpMode {
             }
 
             if(!gamepad1.right_bumper) {
-                l = 0.6;
+                l = 0.6f;
             } else {
                 l = 1;
             }
