@@ -45,10 +45,18 @@ public class drive extends LinearOpMode {
             }
 
             float d; d = Math.max( Math.max(x-r, x+r), Math.max(-x+r, -x-r));
-            fl.setPower(((x+r)/d)*l);
-            fr.setPower(((x-r)/d)*l);
-            bl.setPower(((x+r)/d)*l);
-            br.setPower(((x-r)/d)*l);
+
+            if(!gamepad1.left_bumper) {
+                fl.setPower(((x + r) / d) * l);
+                fr.setPower(((x - r) / d) * l);
+                bl.setPower(((x + r) / d) * l);
+                br.setPower(((x - r) / d) * l);
+            } else {
+                fl.setPower(((x + r) / d) * l);
+                fr.setPower(((x - r) / d) * l);
+                bl.setPower(l);
+                br.setPower(l);
+            }
 
         }
     }
