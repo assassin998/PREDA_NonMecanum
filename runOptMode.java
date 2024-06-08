@@ -28,7 +28,7 @@ public class drive extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()) {
-            float x; float r;
+            float x; float r; float l;
             x = gamepad1.left_stick_x;
             r = gamepad1.right_stick_y;
 
@@ -39,18 +39,16 @@ public class drive extends LinearOpMode {
             }
 
             if(!gamepad1.right_bumper) {
-                if(x > 0.5) {
-                    x = 0.5f;
-                } else if (x < -0.5) {
-                    x = -0.5f;
-                }
+                l = 2;
+            } else {
+                l = 1;
             }
 
             float d; d = Math.max( Math.max(x-r, x+r), Math.max(-x+r, -x-r));
-            fl.setPower((x+r)/d);
-            fr.setPower((x-r)/d);
-            bl.setPower((x+r)/d);
-            br.setPower((x-r)/d);
+            fl.setPower(((x+r)/d)/l);
+            fr.setPower(((x-r)/d)/l);
+            bl.setPower(((x+r)/d)/l);
+            br.setPower(((x-r)/d)/l);
 
         }
     }
