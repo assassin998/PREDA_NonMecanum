@@ -39,16 +39,16 @@ public class drive extends LinearOpMode {
             }
 
             if(!gamepad1.right_bumper) {
-                l = 1.5;
+                l = 0.6;
             } else {
                 l = 1;
             }
 
             float d; d = Math.max( Math.max(x-r, x+r), Math.max(-x+r, -x-r));
-            fl.setPower(((x+r)/d)/l);
-            fr.setPower(((x-r)/d)/l);
-            bl.setPower(((x+r)/d)/l);
-            br.setPower(((x-r)/d)/l);
+            fl.setPower(((x+r)/d)*l);
+            fr.setPower(((x-r)/d)*l);
+            bl.setPower(((x+r)/d)*l);
+            br.setPower(((x-r)/d)*l);
 
         }
     }
