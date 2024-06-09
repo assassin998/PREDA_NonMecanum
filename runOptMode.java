@@ -26,11 +26,12 @@ public class drive extends LinearOpMode {
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
+        // rename
 
         while(opModeIsActive()) {
             float x; float r; float l;
-            x = gamepad1.left_stick_x;
-            r = gamepad1.right_stick_y;
+            x = gamepad1.left_stick_y;
+            r = gamepad1.right_stick_x;
 
             if(r > 0.5) {
                 r = 0.5f;
