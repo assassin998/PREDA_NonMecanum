@@ -8,57 +8,60 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
 public class drive extends LinearOpMode {
-    private DcMotor fl;
-    private DcMotor fr;
-    private DcMotor bl;
-    private DcMotor br;
+    private DcMotor FL;
+    private DcMotor FR;
+    private DcMotor BL;
+    private DcMotor BR;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        fl = hardwareMap.get(DcMotor.class, "FLM");
-        fr = hardwareMap.get(DcMotor.class, "FRM");
-        bl = hardwareMap.get(DcMotor.class, "BLM");
-        br = hardwareMap.get(DcMotor.class, "BRM");
-        fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FL = hardwareMap.get(DcMotor.class, "FL");
+        FR = hardwareMap.get(DcMotor.class, "FR");
+        BL = hardwareMap.get(DcMotor.class, "BL");
+        BR = hardwareMap.get(DcMotor.class, "BR");
+        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
-        // rename
 
         while(opModeIsActive()) {
-            float x; float r; float l;
-            x = gamepad1.left_stick_y;
-            r = gamepad1.right_stick_x;
+            float front; float rotate; float limiter;
+            front = gamepad1.left_stick_y;
+            rotate = gamepad1.right_stick_x;
 
-            if(r > 0.5) {
-                r = 0.5f;
-            } else if (r < -0.5) {
-                r = -0.5f;
+            if(rotate > 0.5) {
+                rotate = 0.5f;
+            } else if (rotate < -0.5) {
+                rotate = -0.5f;
             }
 
             if(!gamepad1.right_bumper) {
-                l = 0.6f;
+                limiter = 0.6f;
             } else {
-                l = 1;
+                limiter = 1;
             }
 
-            float d; d = Math.max( Math.max(x-r, x+r), Math.max(-x+r, -x-r));
+            float divider; divider = Math.max( Math.max(front - rotate, front + rotate), Math.max(-front + rotate, -front - rotate));
+            
+            if(divider <= 1) {
+                divider = 1;
+            }
 
             if(!gamepad1.left_bumper) {
-                fl.setPower(((x + r) / d) * l);
-                fr.setPower(((x - r) / d) * l);
-                bl.setPower(((x + r) / d) * l);
-                br.setPower(((x - r) / d) * l);
+                FL.setPower(((front + rotate) / divider) * limiter);
+                FR.setPower(((front - rotate) / divider) * limiter);
+                BL.setPower(((front + rotate) / divider) * limiter);
+                BR.setPower(((front - rotate) / divider) * limiter);
             } else {
-                fl.setPower(((x + r) / d) * l);
-                fr.setPower(((x - r) / d) * l);
-                bl.setPower(l);
-                br.setPower(l);
-            }
+                FL.setPower(((front + rotate) / divider) * limiter);
+                FR.setPower(((front - rotate) / divider) * limiter);
+                BL.setPower(limiter);
+                BR.setPower(limiter);
 
+            }
         }
     }
 }
