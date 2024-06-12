@@ -32,11 +32,13 @@ public class drive extends LinearOpMode {
             front = gamepad1.left_stick_y;
             rotate = gamepad1.right_stick_x;
 
-            if(rotate > 0.5) {
+            /*if(rotate > 0.5) {
                 rotate = 0.5f;
             } else if (rotate < -0.5) {
                 rotate = -0.5f;
-            }
+            } */
+
+            rotate /= 2;
 
             if(!gamepad1.right_bumper) {
                 limiter = 0.6f;
