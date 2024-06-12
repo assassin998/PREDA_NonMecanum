@@ -38,7 +38,7 @@ public class drive extends LinearOpMode {
                 rotate = -0.5f;
             } */
 
-            rotate /= 2;
+            rotate *= 0.5f;
 
             if(!gamepad1.right_bumper) {
                 limiter = 0.6f;
